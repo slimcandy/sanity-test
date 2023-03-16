@@ -48,6 +48,7 @@ export default {
       options: {
         language: 'javascript',
         languageAlternatives: [
+          {title: 'TSX', value: 'tsx'},
           {title: 'TypeScript', value: 'typescript'},
           {title: 'Javascript', value: 'javascript'},
           {title: 'HTML', value: 'html'},
