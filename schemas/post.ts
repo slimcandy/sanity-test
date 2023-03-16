@@ -1,65 +1,51 @@
-import {defineField, defineType} from 'sanity'
+import {RiArticleLine} from 'react-icons/ri'
 
-export default defineType({
+export default {
   name: 'post',
-  title: 'Post',
+  title: 'Articles',
   type: 'document',
+  icon: RiArticleLine,
   fields: [
-    defineField({
+    {
       name: 'title',
       title: 'Title',
       type: 'string',
-    }),
-    defineField({
+    },
+    {
       name: 'slug',
-      title: 'Slug',
+      title: 'URL path',
       type: 'slug',
       options: {
         source: 'title',
         maxLength: 96,
       },
-    }),
-    defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: {type: 'author'},
-    }),
-    defineField({
-      name: 'mainImage',
-      title: 'Main image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
-    }),
-    defineField({
+    },
+    {
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
-    }),
-    defineField({
-      name: 'body',
-      title: 'Body',
+      validation: (Rule: any) => Rule.required().error('A published date is required'),
+      options: {
+        dateFormat: 'DD.MM.YYYY',
+        timeFormat: 'HH:mm',
+        timeStep: 15,
+        calendarTodayLabel: 'Today',
+      },
+    },
+    {
+      name: 'description',
+      type: 'text',
+      title: 'Description',
+    },
+    {
+      name: 'readMore',
+      title: 'Read more text',
+      type: 'string',
+    },
+    {
+      name: 'content',
       type: 'blockContent',
-    }),
+      title: 'Content',
+    },
   ],
-
-  preview: {
-    select: {
-      title: 'title',
-      author: 'author.name',
-      media: 'mainImage',
-    },
-    prepare(selection) {
-      const {author} = selection
-      return {...selection, subtitle: author && `by ${author}`}
-    },
-  },
-})
+}
